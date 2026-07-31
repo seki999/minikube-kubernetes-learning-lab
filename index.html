@@ -59,7 +59,18 @@
 
       homepage: 'README.md',
 
-      loadSidebar: true,
+      // 使用版本参数绕过 GitHub Pages 对旧侧栏文件的短期缓存。
+      loadSidebar: '_sidebar.md?v=20260801',
+
+      // 已经分享或收藏的旧路由仍然显示对应章节。
+      alias: {
+        '^/docs/README$': '/README.md',
+        '^/docs/docs/(.*)$': '/docs/$1'
+      },
+
+      requestHeaders: {
+        'Cache-Control': 'no-cache'
+      },
 
       auto2top: true,
 
