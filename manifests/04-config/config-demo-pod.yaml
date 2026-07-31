@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: config-demo
+  namespace: learning
+spec:
+  containers:
+    - name: demo
+      image: busybox:1.36
+      command: ["sh", "-c"]
+      args:
+        - |
+          echo "APP_ENV=$APP_ENV"
+          echo "APP_MESSAGE=$APP_MESSAGE"
+          echo "DB_USER=$DB_USER"
+          echo "config file:"
+          cat /config/app.properties
+          sleep 3600
+      envFrom:
+        - configMapRef:
+            name: app-config
+        - secretRef:
+            name: app-secret
+      volumeMounts:
+        - name: config-volume
+          mountPath: /config
+  volumes:
+    - name: config-volume
+      configMap:
+        name: app-config
+        items:
+          - key: app.properties
+            path: app.properties

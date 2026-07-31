@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: learning
+data:
+  APP_ENV: learning
+  APP_MESSAGE: Hello from ConfigMap
+  app.properties: |
+    feature.demo=true
+    log.level=INFO

@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: learning-ingress
+  namespace: learning
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: learning.local
+      http:
+        paths:
+          - path: /web
+            pathType: Prefix
+            backend:
+              service:
+                name: web-a
+                port: {number: 80}
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: api-a
+                port: {number: 80}
