@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Minikube Kubernetes 从零实践教程"
+  >
+
+  <title>Minikube Kubernetes 学习实验室</title>
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css"
+  >
+
+  <style>
+    :root {
+      --theme-color: #326ce5;
+    }
+
+    .app-name-link {
+      font-weight: 700;
+    }
+
+    .markdown-section {
+      max-width: 1100px;
+    }
+
+    .markdown-section code {
+      border-radius: 4px;
+    }
+
+    .markdown-section table {
+      display: table;
+      width: 100%;
+    }
+
+    .sidebar {
+      padding-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">正在加载 Kubernetes 教程……</div>
+
+  <script>
+    window.$docsify = {
+      name: 'Minikube Kubernetes 学习实验室',
+
+      repo: 'seki999/minikube-kubernetes-learning-lab',
+
+      homepage: 'README.md',
+
+      loadSidebar: true,
+
+      auto2top: true,
+
+      relativePath: true,
+
+      maxLevel: 4,
+
+      subMaxLevel: 3,
+
+      search: {
+        placeholder: '搜索教程内容',
+        noData: '没有找到相关内容',
+        depth: 4
+      },
+
+      pagination: {
+        previousText: '上一章',
+        nextText: '下一章',
+        crossChapter: true
+      },
+
+      copyCode: {
+        buttonText: '复制',
+        errorText: '复制失败',
+        successText: '已复制'
+      }
+    };
+  </script>
+
+  <!-- Docsify -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+
+  <!-- 全文搜索 -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+
+  <!-- 代码复制 -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@3/dist/docsify-copy-code.min.js"></script>
+
+  <!-- 上一章 / 下一章 -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
+
+  <!-- Mermaid -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: 'loose',
+      theme: 'default'
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-mermaid@2/dist/docsify-mermaid.js"></script>
+
+  <!-- JavaScript、YAML、Bash 等代码高亮 -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-powershell.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+</body>
+</html>
