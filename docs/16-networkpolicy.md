@@ -56,3 +56,10 @@ kubectl describe networkpolicy allow-labeled-clients
 ## 本章验收
 
 理解 NetworkPolicy 是“允许列表”，并能识别 CNI 支持是生效前提。
+
+
+## 纠正：真正的策略前后对照
+
+上面的 YAML 目录可能同时包含 NetworkPolicy。要测量“应用前允许、应用后拒绝”，必须在添加 NetworkPolicy **之前**先创建 Web、Service、两个客户端并测通，不能先 `apply` 整个目录后才称为“策略前”。建议将策略资源与演示工作负载拆为不同 YAML，或逐一应用，并检查对象类型。
+
+本章还需要在正确的 `policy-lab` Context 中验证，且确保该 Profile 使用支持 NetworkPolicy 的 CNI。操作前运行 `kubectl config current-context`；确认不再需要独立实验集群后，可手动运行 `minikube delete -p policy-lab`，不要使用 `minikube delete --all`。删除完切回 `minikube` 并检查 Context。**当前章节的前后对照和两轮真实集成验证仍待补齐，不应视为通过。**
