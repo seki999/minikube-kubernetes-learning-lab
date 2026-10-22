@@ -82,3 +82,17 @@ flowchart LR
     D --> E[UI 与 kubectl 看到相同事实]
     E --> F[能够解释每个控制器为何采取动作]
 ```
+
+
+## 重要：生命周期验收与清理
+
+本章目前仍需读者自行合并 YAML，因此**不能视为全自动、可独立双轮执行的完整实验**。完成验证后，须逐项确认本轮创建的资源：Ingress、Service、Deployment、ConfigMap、Secret、PVC、HPA，以及任何临时 Pod。
+
+先运行：
+
+```powershell
+kubectl config current-context
+kubectl get deployments,pods,services,ingress,configmaps,secrets,pvc,hpa -n learning
+```
+
+不要直接删除共享 Namespace，也不要为了清理综合实验删除其他章节仍在使用的对象。确认为本轮独占的清单时，可按反向依赖顺序运行相应的 `kubectl delete -f manifests/...`，并再次 `kubectl get` 确认。数据卷另外检查 PV 回收策略。第二轮从干净状态重新执行阶段 1–5。完整双轮自动样板见 `scripts/lifecycle-smoke.ps1`。

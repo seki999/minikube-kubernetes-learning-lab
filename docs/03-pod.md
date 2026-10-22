@@ -85,3 +85,18 @@ Pod 不会自动回来，因为它没有控制器管理。这正是下一章 Dep
 ## 本章验收
 
 能够解释：Pod 可以包含多个容器，但通常一个 Pod 放一个主业务容器；多个容器只有在生命周期和网络必须紧密绑定时才放在一起。
+
+
+## 生命周期补充：第二轮重复验证
+
+上一节删除 Pod 后，确认 `kubectl get pod nginx-pod -n learning --ignore-not-found` 不再返回对象。随后从仓库根目录重新运行：
+
+```powershell
+kubectl apply -f manifests/01-pod/nginx-pod.yaml
+kubectl wait --for=condition=Ready pod/nginx-pod -n learning --timeout=180s
+kubectl get pod nginx-pod -n learning
+kubectl delete -f manifests/01-pod/nginx-pod.yaml --wait=true
+kubectl get pod nginx-pod -n learning --ignore-not-found
+```
+
+检查 `kubectl config current-context` 必须为实验用 Minikube Context。第二轮完成后没有残留 `nginx-pod` 才算通过。请在 `port-forward` 已停止后执行清理。

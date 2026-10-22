@@ -78,3 +78,23 @@ minikube delete --all
 ## 最后的学习判断
 
 真正掌握不是“所有命令都成功”，而是看到失败时能沿着：对象 → 状态 → Events → Logs → 网络/存储/权限 的顺序定位原因。
+
+
+## 删除范围安全守则
+
+- `kubectl delete namespace learning` 会删除该 Namespace 内所有实验及其他可能存在的资源，不是安全的单章清理方式。
+- `minikube delete --all` 会删除**所有** Minikube Profiles，只能在明确要重置整个实验环境时手工使用。
+- 清理前确认 `kubectl config current-context`，检查 `kubectl get all,configmaps,secrets,pvc,ingress,networkpolicy -n learning`。
+- `kubectl get all` 不包含所有资源类型；PVC、Secret、ConfigMap、Ingress、RBAC、NetworkPolicy、PV 等需要额外查看。
+- 单独实验优先使用新建的专属 Namespace，脚本不得删除原本存在的 Namespace。
+
+### 自动双轮烟雾测试
+
+从项目根目录运行：
+
+```powershell
+./scripts/lifecycle-smoke.ps1 -Mode Check
+./scripts/lifecycle-smoke.ps1 -Mode Run
+```
+
+此脚本只为独立 Deployment 演示提供真实运行入口；其余章节的状态见 [生命周期审计](21-lifecycle-audit-report.md)。
