@@ -114,3 +114,22 @@ kubectl get deploy web
 ```
 
 `READY` 应为 `3/3`。
+
+
+## 生命周期补充：删除、恢复与第二轮
+
+> 注意：`kubectl set image` 和 `kubectl scale` 修改的是集群中的期望状态。想严格恢复实验初始状态，不要只靠一次 `apply`；先删除本章 Deployment，再重建。
+
+```powershell
+kubectl config current-context
+kubectl delete -f manifests/02-deployment/web-deployment.yaml --wait=true
+kubectl get deployment web -n learning --ignore-not-found
+kubectl apply -f manifests/02-deployment/web-deployment.yaml
+kubectl rollout status deployment/web -n learning --timeout=180s
+kubectl get deployment web -n learning
+# 再次执行本章扩缩、滚动更新、故障、回滚步骤
+kubectl delete -f manifests/02-deployment/web-deployment.yaml --wait=true
+kubectl get pods -n learning -l app=web
+```
+
+删除 `web` 会影响依赖它的 Service/Ingress 等其他实验；请不要在其他章节正在使用同一个 Deployment 时清理。独立的、不会与现有 `learning` 资源冲突的自动双轮样板见 `scripts/lifecycle-smoke.ps1`。
