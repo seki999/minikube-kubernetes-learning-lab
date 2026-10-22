@@ -116,3 +116,19 @@ Kubernetes Dashboard 项目在 2026 年已经归档。为了保证教程可持�
 ## 安全提醒
 
 本项目的 `cluster-admin` 示例只用于个人本地 Minikube 实验。不要在生产集群直接复制使用。
+
+
+## 可重复执行的生命周期实验（新增）
+
+普通教程中的 `apply/get/describe` 不代表全流程闭环。请阅读 [生命周期审计与验收标准](docs/21-lifecycle-audit-report.md)，了解各章的真实完成状态和剩余限制。
+
+仓库新增一个使用**独立、全新 Namespace** 的 Deployment 双轮实验（PowerShell，从项目根目录执行）：
+
+```powershell
+./scripts/lifecycle-smoke.ps1 -Mode Check
+./scripts/lifecycle-smoke.ps1 -Mode Run
+```
+
+实验会依次创建、扩容、升级、回滚、删除、确认清理，再重复一轮，最后清理专用 Namespace；若同名 Namespace 已存在则拒绝触碰。执行前必须确认当前 Context 为 `minikube`。这只是集成测试入口，**仓库尚未在真实 Minikube 集群完成全章节双轮验证**。
+
+原有 `learning` Namespace 被多章复用，章节内清理命令不可在其他章节使用该资源期间执行；也不要把 `minikube delete --all` 当作单章清理方法。
